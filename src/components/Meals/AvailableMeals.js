@@ -7,11 +7,16 @@ import Loader from '../UI/Loader';
 const AvailableMeals = () =>{
     const [meals, setMeals] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-
+    const [fetchingError, setFetchingError] = useState(false);
     useEffect(() => {
       const fetchMeals = async () =>{
         setIsLoading(true);
         const response = await fetch('https://myfoodapp14-default-rtdb.firebaseio.com/meals.json');
+
+        if(!response.ok)
+        {
+          throw new Error('Somthing went Wrong');
+        }
         const responseData = await response.json();
 
         const loadedMeals = [];
@@ -28,7 +33,10 @@ const AvailableMeals = () =>{
         setIsLoading(false);
       };
 
-      fetchMeals();
+      fetchMeals().catch((error) => {
+        setIsLoading(false);
+        setFetchingError(error.message);
+      });
    },[]);
 
    if(isLoading)
@@ -36,6 +44,15 @@ const AvailableMeals = () =>{
      return (
        <section>
          <Loader/>
+       </section>
+     );
+   }
+
+   if(fetchingError)
+   {
+     return (
+       <section>
+         <p>{fetchingError}</p>
        </section>
      );
    }
