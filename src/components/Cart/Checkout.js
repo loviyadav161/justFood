@@ -43,7 +43,12 @@ const Checkout = (props) =>{
         {
             return;
         }
-
+        props.onConfirm({
+            name:enteredName,
+            city:enteredCity,
+            pinCode:enteredCity,
+            street:enteredStreet,
+        });
     };
     return <form onSubmit={confirmHandler}>
         <div className={`${classes.control} ${checkoutFormValidity.name? '': classes.invalid}`}>
