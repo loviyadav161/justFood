@@ -8,7 +8,7 @@ import Checkout from './Checkout';
 const Cart = (props) => {
     const [isCheckout, setIsCheckout] = useState(false);
     const cartCtx = useContext(CartContex);
-    const totalAmount = `$${cartCtx.totalAmount.toFixed(2)}`;
+    const totalAmount = `Rs${cartCtx.totalAmount.toFixed(2)}`;
     const hasItem = cartCtx.items.length > 0;
     const cartItemRemoveHandler = (id) => {
         cartCtx.removeItem(id);
